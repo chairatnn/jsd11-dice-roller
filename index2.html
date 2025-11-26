@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dice Roller</title>
+    <title>3 Dice Roller</title>
     <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style2.css" />
   </head>
   <body
     class="bg-gray-100 flex items-center justify-center min-h-screen p-4 font-inter"
@@ -14,13 +14,27 @@
     <div
       class="bg-white p-8 rounded-2xl shadow-xl flex flex-col items-center w-full max-w-md"
     >
-      <h1 class="text-3xl font-bold text-gray-800 mb-6">Dice Roller</h1>
+      <h1 class="text-3xl font-bold text-gray-800 mb-6">3 Dice Roller</h1>
       <!-- Dice Display -->
-      <div
-        id="diceDisplay"
-        class="w-32 h-32 flex items-center justify-center bg-gray-800 text-white rounded-xl mb-6 shadow-lg text-5xl"
-      >
-        <!-- SVG will go here -->
+      <div class="flex space-x-4 mb-6">
+        <div
+          id="diceDisplay1"
+          class="w-24 h-24 flex items-center justify-center bg-gray-800 text-white rounded-xl shadow-lg text-5xl"
+        >
+          <!-- SVG will go here -->
+        </div>
+        <div
+          id="diceDisplay2"
+          class="w-24 h-24 flex items-center justify-center bg-gray-800 text-white rounded-xl shadow-lg text-5xl"
+        >
+          <!-- SVG will go here -->
+        </div>
+        <div
+          id="diceDisplay3"
+          class="w-24 h-24 flex items-center justify-center bg-gray-800 text-white rounded-xl shadow-lg text-5xl"
+        >
+          <!-- SVG will go here -->
+        </div>
       </div>
       <!-- Roll Button -->
       <button
@@ -43,6 +57,6 @@
       </div>
       <!-- Footer -->
     </div>
-    <script src="script.js"></script>
+    <script src="script2.js"></script>
   </body>
 </html>

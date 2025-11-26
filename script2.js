@@ -1,4 +1,8 @@
-const diceDisplay = document.getElementById("diceDisplay");
+const diceDisplays = [
+  document.getElementById("diceDisplay1"),
+  document.getElementById("diceDisplay2"),
+  document.getElementById("diceDisplay3"),
+];
 const rollButton = document.getElementById("rollButton");
 const historyList = document.getElementById("historyList");
 const noHistoryMessage = document.getElementById("noHistoryMessage");
@@ -37,9 +41,6 @@ const dotPositions = {
   ],
 };
 
-// function can have parameters i.e. "value" in below function
-// possible values that this function can take are called arguments -> 1 , 2 , 3 , 4 , 5 , 6
-
 function createDiceSVG(value) {
   const dots = dotPositions[value] || dotPositions[1];
   const circles = dots
@@ -57,48 +58,56 @@ function createDiceSVG(value) {
     `;
 }
 
-function addRollToHistory(result) {
+function addRollToHistory(results) {
   if (noHistoryMessage) noHistoryMessage.remove();
   const item = document.createElement("div");
   item.className =
     "flex items-center justify-between py-2 border-b border-gray-200 text-gray-700";
 
   const now = new Date();
-
   const time = now.toLocaleTimeString([], {
     hour: "2-digit",
     minute: "2-digit",
   });
 
-  item.innerHTML = `<span class="font-medium">Roll: ${result}</span><span class="text-gray-500 text-sm">${time}</span>`;
+  const sum = results.reduce((a, b) => a + b, 0);
+  item.innerHTML = `<span class="font-medium">Rolls: ${results.join(
+    ", "
+  )} (Sum: ${sum})</span><span class="text-gray-500 text-sm">${time}</span>`;
   historyList.prepend(item);
   if (historyList.children.length > 10) historyList.lastChild.remove();
 }
 
 function rollDice() {
   rollButton.disabled = true;
-  diceDisplay.classList.add("animate-shake");
+  diceDisplays.forEach((dice) => dice.classList.add("animate-shake"));
 
   let count = 0;
-
   const interval = setInterval(() => {
-    const temp = Math.floor(Math.random() * 6) + 1;
-    // 1 -> 6, include 6
-    diceDisplay.innerHTML = createDiceSVG(temp);
+    const tempResults = diceDisplays.map(
+      () => Math.floor(Math.random() * 6) + 1
+    );
+    diceDisplays.forEach((dice, index) => {
+      dice.innerHTML = createDiceSVG(tempResults[index]);
+    });
+
     if (++count >= 10) {
       clearInterval(interval);
-      const final = Math.floor(Math.random() * 6) + 1;
-      diceDisplay.innerHTML = createDiceSVG(final);
-      diceDisplay.classList.remove("animate-shake");
+      const finalResults = diceDisplays.map(
+        () => Math.floor(Math.random() * 6) + 1
+      );
+      diceDisplays.forEach((dice, index) => {
+        dice.innerHTML = createDiceSVG(finalResults[index]);
+        dice.classList.remove("animate-shake");
+      });
       rollButton.disabled = false;
-      addRollToHistory(final);
+      addRollToHistory(finalResults);
     }
   }, 100);
 }
 
-// we have prepared what we need above
-// now we will use it below
-
 rollButton.addEventListener("click", rollDice);
 
-diceDisplay.innerHTML = createDiceSVG(1);
+diceDisplays.forEach((dice) => {
+  dice.innerHTML = createDiceSVG(1);
+});
